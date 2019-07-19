@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 
-function Logo() {
+function Logo(props) {
   return (
     <div className="Logo">
       <svg
@@ -36,10 +36,78 @@ function Banner({ img, text }) {
   );
 }
 
+class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: '',
+      checkIn: '',
+      checkOut: '',
+      guests: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    if (name === 'location') {
+      this.setState({ [name]: value });
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    alert(`Submitted: ${this.state.location}`);
+  }
+
+  render() {
+    return (
+      <div className="SearchForm">
+        <form>
+          <p>
+            <div className="formRow">
+              <label for="location">Where</label>
+              <input
+                type="text"
+                placeholder="Anywhere"
+                name="location"
+                value={this.state.where}
+                onChange={e => this.handleChange(e)}
+              />
+            </div>
+          </p>
+          <p>
+            <div className="formRow">
+              <label>Check-in</label>
+              <input type="date" />
+            </div>
+
+            <div className="formRow">
+              <label>Check-out</label>
+              <input type="date" />
+            </div>
+          </p>
+          <p>
+            <div className="formRow">
+              <label>Guests</label>
+              <input type="select" placeholder="Guests" />
+            </div>
+          </p>
+
+          <button onClick={e => this.handleSubmit(e)}>Search</button>
+        </form>
+      </div>
+    );
+  }
+}
+
 function App() {
   return (
     <div className="App">
       <Banner text="Book unique places to stay and things to do" />
+      <SearchForm />
     </div>
   );
 }

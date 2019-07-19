@@ -40,3 +40,56 @@
   height: 34px;
   width: 34px;
 }
+
+.SearchForm {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  text-align: left;
+  max-width: 720px;
+  padding: 24px;
+}
+
+.SearchForm form {
+  width: 100%;
+}
+
+.SearchForm form p {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.SearchForm form label {
+  padding-bottom: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.SearchForm form input {
+  box-sizing: border-box;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  height: 48px;
+  padding: 10px;
+  font-size: 1em;
+}
+
+.formRow {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+
+.SearchForm button {
+  width: 100%;
+  height: 48px;
+  padding: 5px;
+  text-align: center;
+  background-color: #ea555c;
+  border: none;
+  color: white;
+  font-size: 1em;
+  font-weight: bold;
+}
