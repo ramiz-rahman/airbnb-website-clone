@@ -93,3 +93,37 @@
   font-size: 1em;
   font-weight: bold;
 }
+
+.CounterField {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.CounterField .ButtonGroup {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 120px;
+}
+
+.CounterField button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #579ea3;
+  color: #579ea3;
+  cursor: pointer;
+}
+
+.CounterField button.inactive {
+  color: #d1e6e7;
+  border-color: #d1e6e7;
+  cursor: default;
+}

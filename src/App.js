@@ -36,6 +36,24 @@ function Banner({ img, text }) {
   );
 }
 
+function CounterField({ name, currentVal, onIncrement, onDecrement }) {
+  let classInactive = currentVal === 0 ? 'inactive' : '';
+  return (
+    <div className="CounterField">
+      <div>{name}</div>
+      <div className="ButtonGroup">
+        <button className={classInactive} name={name} onClick={onDecrement}>
+          -
+        </button>
+        <div>{currentVal}</div>
+        <button name={name} onClick={onIncrement}>
+          +
+        </button>
+      </div>
+    </div>
+  );
+}
+
 class SearchForm extends Component {
   constructor(props) {
     super(props);
@@ -43,10 +61,16 @@ class SearchForm extends Component {
       location: '',
       checkIn: '',
       checkOut: '',
-      guests: ''
+      guests: {
+        adults: 0,
+        children: 0,
+        infants: 0
+      }
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleGuestIncrement = this.handleGuestIncrement.bind(this);
+    this.handleGuestDecrement = this.handleGuestDecrement.bind(this);
   }
 
   handleChange(event) {
@@ -62,6 +86,26 @@ class SearchForm extends Component {
     alert(`Submitted: ${this.state.location}`);
   }
 
+  handleGuestIncrement(event) {
+    event.preventDefault();
+    const name = event.target.name.toLowerCase();
+    this.setState((state, props) => {
+      const guests = state.guests;
+      guests[name] = guests[name] + 1;
+      return { guests };
+    });
+  }
+
+  handleGuestDecrement(event) {
+    event.preventDefault();
+    const name = event.target.name.toLowerCase();
+    this.setState((state, props) => {
+      const guests = state.guests;
+      guests[name] = guests[name] === 0 ? 0 : guests[name] - 1;
+      return { guests };
+    });
+  }
+
   render() {
     return (
       <div className="SearchForm">
@@ -74,7 +118,7 @@ class SearchForm extends Component {
                 placeholder="Anywhere"
                 name="location"
                 value={this.state.where}
-                onChange={e => this.handleChange(e)}
+                onChange={this.handleChange}
               />
             </div>
           </p>
@@ -95,8 +139,30 @@ class SearchForm extends Component {
               <input type="select" placeholder="Guests" />
             </div>
           </p>
+          <p>
+            <div className="formRow">
+              <CounterField
+                name="Adults"
+                currentVal={this.state.guests['adults']}
+                onIncrement={this.handleGuestIncrement}
+                onDecrement={this.handleGuestDecrement}
+              />
+              <CounterField
+                name="Children"
+                currentVal={this.state.guests['children']}
+                onIncrement={this.handleGuestIncrement}
+                onDecrement={this.handleGuestDecrement}
+              />
+              <CounterField
+                name="Infants"
+                currentVal={this.state.guests['infants']}
+                onIncrement={this.handleGuestIncrement}
+                onDecrement={this.handleGuestDecrement}
+              />
+            </div>
+          </p>
 
-          <button onClick={e => this.handleSubmit(e)}>Search</button>
+          <button onClick={this.handleSubmit}>Search</button>
         </form>
       </div>
     );
