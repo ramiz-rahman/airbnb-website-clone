@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
+import travelImage from './images/travel.jpg';
+import 'react-dates/initialize';
+import { SingleDatePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 
 function Logo(props) {
   return (
@@ -20,7 +24,7 @@ function Logo(props) {
       >
         <path
           d="m16.29 4.3a1 1 0 1 1 1.41 1.42l-8 8a1 1 0 0 1 -1.41 0l-8-8a1 1 0 1 1 1.41-1.42l7.29 7.29z"
-          fill-rule="evenodd"
+          fillRule="evenodd"
         />
       </svg>
     </div>
@@ -59,13 +63,14 @@ class SearchForm extends Component {
     super(props);
     this.state = {
       location: '',
-      checkIn: '',
-      checkOut: '',
+      checkIn: null,
+      checkOut: null,
       guests: {
         adults: 0,
         children: 0,
         infants: 0
-      }
+      },
+      focused: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -112,7 +117,7 @@ class SearchForm extends Component {
         <form>
           <p>
             <div className="formRow">
-              <label for="location">Where</label>
+              <label htmlFor="location">Where</label>
               <input
                 type="text"
                 placeholder="Anywhere"
@@ -125,12 +130,20 @@ class SearchForm extends Component {
           <p>
             <div className="formRow">
               <label>Check-in</label>
-              <input type="date" />
+              <SingleDatePicker
+                date={this.state.checkIn}
+                onDateChange={date => this.setState({ checkIn: date })}
+                focused={this.state.focused}
+                onFocusChange={({ focused }) => this.setState({ focused })}
+                id="check-in"
+                numberOfMonths={1}
+                showClearDate
+                small
+              />
             </div>
 
             <div className="formRow">
               <label>Check-out</label>
-              <input type="date" />
             </div>
           </p>
           <p>
@@ -169,11 +182,50 @@ class SearchForm extends Component {
   }
 }
 
+function SmallCard({ img, title, subtitle }) {
+  return (
+    <div className="SmallCard">
+      <img src={img} alt={title} />
+      <div>
+        <h3>{title}</h3>
+        <p>{subtitle}</p>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   return (
     <div className="App">
       <Banner text="Book unique places to stay and things to do" />
       <SearchForm />
+      <div>
+        <h2>Explore</h2>
+        <div className="Carousel">
+          <div>
+            <SmallCard
+              img={travelImage}
+              title="Stays"
+              subtitle="Homes & more"
+            />
+            <SmallCard
+              img={travelImage}
+              title="Stays"
+              subtitle="Homes & more"
+            />
+            <SmallCard
+              img={travelImage}
+              title="Stays"
+              subtitle="Homes & more"
+            />
+            <SmallCard
+              img={travelImage}
+              title="Stays"
+              subtitle="Homes & more"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
